@@ -53,11 +53,12 @@
         android:layout_height="wrap_content"
         android:layout_margin="24dp"
         android:contentDescription="@string/add_new_note_button"
-        app:backgroundTint="@color/light_gray"
+        android:backgroundTint="@color/black"
+        app:tint="@color/white"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_add" />
+        app:srcCompat="@drawable/ic_add"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
