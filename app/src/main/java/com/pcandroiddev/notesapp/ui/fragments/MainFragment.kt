@@ -10,23 +10,16 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.gson.Gson
 import com.pcandroiddev.notesapp.R
 import com.pcandroiddev.notesapp.adapters.NoteAdapter
-import com.pcandroiddev.notesapp.api.NoteService
 import com.pcandroiddev.notesapp.databinding.FragmentMainBinding
-import com.pcandroiddev.notesapp.databinding.FragmentNoteBinding
 import com.pcandroiddev.notesapp.models.note.NoteResponse
 import com.pcandroiddev.notesapp.util.Constants.TAG
 import com.pcandroiddev.notesapp.util.NetworkResults
 import com.pcandroiddev.notesapp.viewmodel.NoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
@@ -45,7 +38,8 @@ class MainFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentMainBinding.inflate(inflater, container, false)
-        adapter = NoteAdapter(::onNoteClicked) //Use "::" notation to convert a function into a lambda
+        adapter =
+            NoteAdapter(::onNoteClicked) //Use "::" notation to convert a function into a lambda
         return binding.root
     }
 
@@ -72,7 +66,13 @@ class MainFragment : Fragment() {
             when (it) {
                 is NetworkResults.Success -> {
                     adapter.submitList(it.data)
-                    Log.d(TAG, "bindObservers: ${it.data} ")
+                    if (it.data?.isEmpty() == true) {
+                        binding.tvEmptyResponse.visibility = View.VISIBLE
+                        Log.d(TAG, "bindObservers EmptyResponse: ${it.data} ")
+                    } else {
+                        binding.tvEmptyResponse.visibility = View.GONE
+                        Log.d(TAG, "bindObservers Response: ${it.data} ")
+                    }
                 }
                 is NetworkResults.Error -> {
                     Toast.makeText(requireContext(), it.message.toString(), Toast.LENGTH_SHORT)
