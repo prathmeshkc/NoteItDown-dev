@@ -6,6 +6,9 @@ import com.pcandroiddev.notesapp.api.NoteService
 import com.pcandroiddev.notesapp.models.note.NoteRequest
 import com.pcandroiddev.notesapp.models.note.NoteResponse
 import com.pcandroiddev.notesapp.util.NetworkResults
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 import retrofit2.Response
 import javax.inject.Inject
@@ -31,16 +34,31 @@ class NoteRepository @Inject constructor(private val noteService: NoteService) {
         }
     }
 
-    suspend fun createNote(noteRequest: NoteRequest) {
+    suspend fun createNote(
+        images: List<MultipartBody.Part>,
+        title: RequestBody,
+        description: RequestBody
+    ) {
         _statusLiveData.postValue(NetworkResults.Loading())
-        val response = noteService.createNote(noteRequest = noteRequest)
+        val response =
+            noteService.createNote(images = images, title = title, description = description)
         handleResponse(response = response, message = "Note Created!")
 
     }
 
-    suspend fun updateNote(noteId: String, noteRequest: NoteRequest) {
+    suspend fun updateNote(
+        noteId: String,
+        images: List<MultipartBody.Part>,
+        title: RequestBody,
+        description: RequestBody
+    ) {
         _statusLiveData.postValue(NetworkResults.Loading())
-        val response = noteService.updateNote(noteId = noteId, noteRequest = noteRequest)
+        val response = noteService.updateNote(
+            noteId = noteId,
+            images = images,
+            title = title,
+            description = description
+        )
         handleResponse(response = response, message = "Note Updated!")
     }
 

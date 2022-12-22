@@ -10,6 +10,8 @@ import com.pcandroiddev.notesapp.util.NetworkResults
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,15 +26,29 @@ class NoteViewModel @Inject constructor(private val noteRepository: NoteReposito
         }
     }
 
-    fun createNotes(noteRequest: NoteRequest) {
+    fun createNotes(
+        images: List<MultipartBody.Part>,
+        title: RequestBody,
+        description: RequestBody
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
-            noteRepository.createNote(noteRequest = noteRequest)
+            noteRepository.createNote(images = images, title, description)
         }
     }
 
-    fun updateNotes(noteId: String, noteRequest: NoteRequest) {
+    fun updateNotes(
+        noteId: String,
+        images: List<MultipartBody.Part>,
+        title: RequestBody,
+        description: RequestBody
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
-            noteRepository.updateNote(noteId = noteId, noteRequest = noteRequest)
+            noteRepository.updateNote(
+                noteId = noteId,
+                images = images,
+                title = title,
+                description = description
+            )
         }
     }
 
