@@ -1,6 +1,5 @@
 package com.pcandroiddev.notesapp.api
 
-import com.pcandroiddev.notesapp.models.note.NoteRequest
 import com.pcandroiddev.notesapp.models.note.NoteResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody

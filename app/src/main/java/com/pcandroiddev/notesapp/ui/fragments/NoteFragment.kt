@@ -72,8 +72,9 @@ class NoteFragment : Fragment() {
         bindObservers()
     }
 
-    private fun setupRecyclerViewAdapter(){
-        binding.rvImages.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL, false)
+    private fun setupRecyclerViewAdapter() {
+        binding.rvImages.layoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         binding.rvImages.adapter = imageAdapter
     }
 
@@ -107,15 +108,19 @@ class NoteFragment : Fragment() {
             if (note != null) {
                 noteViewModel.updateNotes(
                     noteId = note!!._id,
-                    images = listOfPart.toList(),
-                    title = titleRequestBody,
-                    description = descRequestBody
+                    noteRequest = NoteRequest(
+                        images = listOfPart.toList(),
+                        title = titleRequestBody,
+                        description = descRequestBody
+                    )
                 )
             } else {
                 noteViewModel.createNotes(
-                    images = listOfPart.toList(),
-                    title = titleRequestBody,
-                    description = descRequestBody
+                    noteRequest = NoteRequest(
+                        images = listOfPart.toList(),
+                        title = titleRequestBody,
+                        description = descRequestBody
+                    )
                 )
 
             }
@@ -149,7 +154,7 @@ class NoteFragment : Fragment() {
                 val listOfImageUrls: MutableList<Uri> = mutableListOf()
                 binding.txtTitle.setText(it.title)
                 binding.txtDescription.setText(it.description)
-                for(index in it.img_urls.indices){
+                for (index in it.img_urls.indices) {
                     listOfImageUrls.add(index, it.img_urls[index].secure_url.toUri())
                 }
                 imageAdapter.submitList(listOfImageUrls)

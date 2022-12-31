@@ -27,27 +27,21 @@ class NoteViewModel @Inject constructor(private val noteRepository: NoteReposito
     }
 
     fun createNotes(
-        images: List<MultipartBody.Part>,
-        title: RequestBody,
-        description: RequestBody
+        noteRequest: NoteRequest
     ) {
         viewModelScope.launch(Dispatchers.IO) {
-            noteRepository.createNote(images = images, title, description)
+            noteRepository.createNote(noteRequest = noteRequest)
         }
     }
 
     fun updateNotes(
         noteId: String,
-        images: List<MultipartBody.Part>,
-        title: RequestBody,
-        description: RequestBody
+        noteRequest: NoteRequest
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             noteRepository.updateNote(
                 noteId = noteId,
-                images = images,
-                title = title,
-                description = description
+                noteRequest = noteRequest
             )
         }
     }

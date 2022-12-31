@@ -35,29 +35,29 @@ class NoteRepository @Inject constructor(private val noteService: NoteService) {
     }
 
     suspend fun createNote(
-        images: List<MultipartBody.Part>,
-        title: RequestBody,
-        description: RequestBody
+        noteRequest: NoteRequest
     ) {
         _statusLiveData.postValue(NetworkResults.Loading())
         val response =
-            noteService.createNote(images = images, title = title, description = description)
+            noteService.createNote(
+                images = noteRequest.images,
+                title = noteRequest.title,
+                description = noteRequest.description
+            )
         handleResponse(response = response, message = "Note Created!")
 
     }
 
     suspend fun updateNote(
         noteId: String,
-        images: List<MultipartBody.Part>,
-        title: RequestBody,
-        description: RequestBody
+        noteRequest: NoteRequest
     ) {
         _statusLiveData.postValue(NetworkResults.Loading())
         val response = noteService.updateNote(
             noteId = noteId,
-            images = images,
-            title = title,
-            description = description
+            images = noteRequest.images,
+            title = noteRequest.title,
+            description = noteRequest.description
         )
         handleResponse(response = response, message = "Note Updated!")
     }
