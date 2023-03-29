@@ -55,6 +55,7 @@ class RegisterFragment : Fragment() {
 
         binding.btnLogin.setOnClickListener {
             findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+//            throw RuntimeException("Firebase Crashlytics Test Crash")
         }
 
         bindObserver()

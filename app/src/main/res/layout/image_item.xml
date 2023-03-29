@@ -11,6 +11,6 @@
     android:src="@drawable/ic_launcher_background"
     app:layout_constraintDimensionRatio="1"
     app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
-    app:strokeColor="@android:color/black"
+    app:strokeColor="@android:color/white"
     app:strokeWidth="3dp"
     tools:ignore="MissingConstraints" />
