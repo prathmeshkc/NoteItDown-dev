@@ -50,7 +50,8 @@ class LoginFragment : Fragment() {
         }
 
         binding.btnSignUp.setOnClickListener {
-            findNavController().popBackStack()
+//            findNavController().popBackStack()
+            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
         bindObserver()
     }
