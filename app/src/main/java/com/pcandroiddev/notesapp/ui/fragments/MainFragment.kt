@@ -1,7 +1,11 @@
 package com.pcandroiddev.notesapp.ui.fragments
 
+import android.annotation.SuppressLint
+import android.graphics.drawable.InsetDrawable
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.util.TypedValue
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -10,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.annotation.MenuRes
+import androidx.appcompat.view.menu.MenuBuilder
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -104,9 +109,26 @@ class MainFragment : Fragment() {
 
     }
 
+    @SuppressLint("RestrictedApi")
     private fun showMenu(view: View, @MenuRes menuRes: Int) {
         val popupMenu = PopupMenu(requireContext(), view)
         popupMenu.menuInflater.inflate(menuRes, popupMenu.menu)
+
+
+
+        try {
+            val fieldMPopup = PopupMenu::class.java.getDeclaredField("mPopup")
+            fieldMPopup.isAccessible = true
+            val mPopup = fieldMPopup.get(popupMenu)
+            mPopup.javaClass
+                .getDeclaredMethod("setForceShowIcon", Boolean::class.java)
+                .invoke(mPopup, true)
+        } catch (e: Exception) {
+            Log.e("Main", "Error showing menu icons.", e)
+        } finally {
+            popupMenu.show()
+        }
+
 
         popupMenu.setOnMenuItemClickListener { menuItem: MenuItem ->
             // Respond to menu item click.
@@ -126,7 +148,7 @@ class MainFragment : Fragment() {
             Log.d("PopupMenu", "Dismissed")
         }
         // Show the popup menu.
-        popupMenu.show()
+//        popupMenu.show()
 
     }
 
